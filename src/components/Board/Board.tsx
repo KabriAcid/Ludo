@@ -116,11 +116,11 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
             const isStart = [0, 13, 26, 39].includes(index);
             let cellColor = '#f5e6c8'; // Default cream color
 
-            // Color the start positions
+            // Color the start positions - matches START_POSITIONS in boardConfig
             if (index === 0) cellColor = PLAYER_COLORS.red;
-            else if (index === 13) cellColor = PLAYER_COLORS.green;
+            else if (index === 13) cellColor = PLAYER_COLORS.blue;
             else if (index === 26) cellColor = PLAYER_COLORS.yellow;
-            else if (index === 39) cellColor = PLAYER_COLORS.blue;
+            else if (index === 39) cellColor = PLAYER_COLORS.green;
 
             cells.push(
                 <div
@@ -234,9 +234,9 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
 
             {/* Home bases */}
             {renderHomeBase('red', 0, 0)}
-            {renderHomeBase('green', 9, 0)}
+            {renderHomeBase('blue', 9, 0)}
             {renderHomeBase('yellow', 9, 9)}
-            {renderHomeBase('blue', 0, 9)}
+            {renderHomeBase('green', 0, 9)}
 
             {/* Track cells */}
             {renderTrackCells()}
