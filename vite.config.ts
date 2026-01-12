@@ -8,12 +8,12 @@ export default defineConfig({
         VitePWA({
             registerType: 'autoUpdate',
             includeAssets: [
-                'dice-1.png',
-                'dice-2.png',
-                'dice-3.png',
-                'dice-4.png',
-                'dice-5.png',
-                'dice-6.png',
+                'dice-1.svg',
+                'dice-2.svg',
+                'dice-3.svg',
+                'dice-4.svg',
+                'dice-5.svg',
+                'dice-6.svg',
                 'sounds/*.mp3',
             ],
             manifest: {
