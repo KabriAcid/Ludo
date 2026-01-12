@@ -6,11 +6,11 @@ import { MenuScreen, GameScreen, ResultsScreen } from './components/Screens';
 import { GameMode } from './types';
 
 const AppContent: React.FC = () => {
-    const { gamePhase, initGame, goToMenu } = useGameStore();
+    const { gamePhase, mode, initGame, goToMenu } = useGameStore();
     const navigate = useNavigate();
 
-    const handleStartGame = (mode: GameMode) => {
-        initGame(mode);
+    const handleStartGame = (selectedMode: GameMode) => {
+        initGame(selectedMode);
         navigate('/play');
     };
 
@@ -20,6 +20,7 @@ const AppContent: React.FC = () => {
     };
 
     const handlePlayAgain = () => {
+        initGame(mode);
         navigate('/play');
     };
 
