@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="192" height="192" rx="32" fill="url(#bg)"/>
+  <!-- Dice face -->
+  <rect x="46" y="46" width="100" height="100" rx="16" fill="white"/>
+  <!-- Dots (showing 6) -->
+  <circle cx="72" cy="72" r="10" fill="#1e3a5f"/>
+  <circle cx="120" cy="72" r="10" fill="#1e3a5f"/>
+  <circle cx="72" cy="96" r="10" fill="#1e3a5f"/>
+  <circle cx="120" cy="96" r="10" fill="#1e3a5f"/>
+  <circle cx="72" cy="120" r="10" fill="#1e3a5f"/>
+  <circle cx="120" cy="120" r="10" fill="#1e3a5f"/>
+  <!-- Player tokens -->
+  <circle cx="36" cy="36" r="14" fill="#dc2626"/>
+  <circle cx="156" cy="36" r="14" fill="#16a34a"/>
+  <circle cx="36" cy="156" r="14" fill="#2563eb"/>
+  <circle cx="156" cy="156" r="14" fill="#eab308"/>
+</svg>
