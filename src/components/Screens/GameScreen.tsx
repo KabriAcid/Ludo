@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { Board } from '../Board/Board';
-import { Dice } from '../Dice/Dice';
 import { PLAYER_COLORS, PLAYER_NAMES } from '../../utils/boardConfig';
 
 interface GameScreenProps {
@@ -113,14 +112,9 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGoToMenu }) => {
                 ))}
             </div>
 
-            {/* Game Board */}
+            {/* Game Board - dice are now integrated on the board */}
             <div className="flex-1 flex items-center justify-center">
                 <Board size={boardSize} />
-            </div>
-
-            {/* Dice Area */}
-            <div className="mt-3 sm:mt-4">
-                <Dice />
             </div>
         </div>
     );

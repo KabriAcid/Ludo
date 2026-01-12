@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { Token } from '../Token/Token';
+import { PlayerDice } from '../Dice/PlayerDice';
 import { PlayerColor } from '../../types';
 import {
     BOARD_SIZE,
@@ -245,6 +246,32 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
 
             {/* Tokens */}
             {renderTokens()}
+
+            {/* Individual Player Dice - positioned at bottom of each house */}
+            {/* Red - top-left house, dice at bottom-center */}
+            <PlayerDice
+                playerId="red"
+                cellSize={cellSize}
+                position={{ x: cellSize * 3, y: cellSize * 6.2 }}
+            />
+            {/* Blue - top-right house, dice at bottom-center */}
+            <PlayerDice
+                playerId="blue"
+                cellSize={cellSize}
+                position={{ x: cellSize * 12, y: cellSize * 6.2 }}
+            />
+            {/* Yellow - bottom-right house, dice at top-center */}
+            <PlayerDice
+                playerId="yellow"
+                cellSize={cellSize}
+                position={{ x: cellSize * 12, y: cellSize * 8.8 }}
+            />
+            {/* Green - bottom-left house, dice at top-center */}
+            <PlayerDice
+                playerId="green"
+                cellSize={cellSize}
+                position={{ x: cellSize * 3, y: cellSize * 8.8 }}
+            />
 
             {/* Current player indicator */}
             <motion.div
