@@ -1,0 +1,1 @@
+Classic Mode: If the first token is out and is in auto move, he should then move forward without needing to click on the token
