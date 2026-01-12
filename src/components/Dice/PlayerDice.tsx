@@ -28,8 +28,8 @@ export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize, posi
     const diceSize = Math.max(cellSize * 1.4, 32);
 
     // Show dice value for current player, or default dice for others
-    const currentDiceImage = isCurrentPlayer && diceValue 
-        ? diceImages[diceValue - 1] 
+    const currentDiceImage = isCurrentPlayer && diceValue
+        ? diceImages[diceValue - 1]
         : diceImages[0];
 
     return (
@@ -47,11 +47,10 @@ export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize, posi
             <motion.button
                 onClick={canRoll ? rollDice : undefined}
                 disabled={!canRoll}
-                className={`relative rounded-lg shadow-lg ${
-                    canRoll
+                className={`relative rounded-lg shadow-lg ${canRoll
                         ? 'cursor-pointer'
                         : 'cursor-not-allowed'
-                } ${!isCurrentPlayer ? 'opacity-40 grayscale' : ''}`}
+                    } ${!isCurrentPlayer ? 'opacity-40 grayscale' : ''}`}
                 style={{
                     width: diceSize,
                     height: diceSize,
