@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { MapPin } from 'lucide-react';
 import { Token as TokenType } from '../../types';
 import { PLAYER_COLORS } from '../../utils/boardConfig';
 import { useGameStore } from '../../store/gameStore';
@@ -26,10 +27,10 @@ export const Token: React.FC<TokenProps> = ({
     const { moveToken, hasRolled } = useGameStore();
 
     const color = PLAYER_COLORS[token.playerId];
-    const tokenSize = cellSize * 0.8;
+    const tokenSize = cellSize * 0.85;
 
     // Offset for stacked tokens
-    const stackOffset = stackCount > 1 ? (stackIndex - (stackCount - 1) / 2) * 5 : 0;
+    const stackOffset = stackCount > 1 ? (stackIndex - (stackCount - 1) / 2) * 4 : 0;
 
     const handleClick = () => {
         if (isMovable && hasRolled) {
@@ -45,69 +46,50 @@ export const Token: React.FC<TokenProps> = ({
                 ${token.isHome ? 'opacity-60' : ''}`}
             style={{
                 width: tokenSize,
-                height: tokenSize * 1.3,
+                height: tokenSize,
                 left: x * cellSize + (cellSize - tokenSize) / 2 + stackOffset,
-                top: y * cellSize + (cellSize - tokenSize * 1.3) / 2 + stackOffset,
+                top: y * cellSize + (cellSize - tokenSize) / 2 + stackOffset,
             }}
             initial={{ scale: 0, y: -20 }}
-            animate={{ scale: 1, y: 0 }}
+            animate={{
+                scale: 1,
+                y: 0,
+                ...(isMovable && {
+                    y: [0, -3, 0],
+                }),
+            }}
             transition={{
                 scale: { type: 'spring', stiffness: 500, damping: 30 },
+                y: isMovable ? { duration: 0.8, repeat: Infinity } : {},
             }}
-            whileHover={isMovable ? { scale: 1.15, y: -3 } : {}}
+            whileHover={isMovable ? { scale: 1.2, y: -5 } : {}}
             whileTap={isMovable ? { scale: 0.9 } : {}}
             layout
         >
-            {/* Token using inline SVG pawn shape */}
-            <svg
-                viewBox="0 0 100 150"
-                className="w-full h-full"
+            {/* MapPin Icon Token */}
+            <MapPin
+                size={tokenSize}
+                fill={color}
+                color="rgba(0,0,0,0.3)"
+                strokeWidth={1.5}
                 style={{
                     filter: isMovable
-                        ? 'drop-shadow(0 0 10px rgba(255,255,255,0.9))'
-                        : 'drop-shadow(0 3px 4px rgba(0,0,0,0.5))',
+                        ? `drop-shadow(0 0 8px ${color}) drop-shadow(0 0 12px rgba(255,255,255,0.8))`
+                        : 'drop-shadow(0 2px 3px rgba(0,0,0,0.4))',
                 }}
-            >
-                {/* Base */}
-                <ellipse cx="50" cy="140" rx="40" ry="10" fill={color} opacity="0.8" />
-                <ellipse cx="50" cy="130" rx="35" ry="8" fill={color} />
-
-                {/* Body */}
-                <path
-                    d="M25 130 Q15 100 25 70 Q30 50 50 45 Q70 50 75 70 Q85 100 75 130 Z"
-                    fill={color}
-                />
-
-                {/* Neck */}
-                <rect x="40" y="35" width="20" height="15" rx="3" fill={color} />
-
-                {/* Head */}
-                <circle cx="50" cy="25" r="22" fill={color} />
-
-                {/* Highlight on head */}
-                <circle cx="42" cy="18" r="8" fill="rgba(255,255,255,0.35)" />
-
-                {/* Outline */}
-                <path
-                    d="M25 130 Q15 100 25 70 Q30 50 50 45 Q70 50 75 70 Q85 100 75 130"
-                    fill="none"
-                    stroke="rgba(0,0,0,0.2)"
-                    strokeWidth="2"
-                />
-                <circle cx="50" cy="25" r="22" fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="2" />
-            </svg>
+            />
 
             {/* Glow animation for movable tokens */}
             {isMovable && (
                 <motion.div
-                    className="absolute inset-0"
+                    className="absolute inset-0 rounded-full"
                     animate={{
-                        opacity: [0.5, 1, 0.5],
+                        opacity: [0.3, 0.7, 0.3],
+                        scale: [1, 1.2, 1],
                     }}
-                    transition={{ duration: 1, repeat: Infinity }}
+                    transition={{ duration: 1.2, repeat: Infinity }}
                     style={{
-                        background: `radial-gradient(circle, ${color}40 0%, transparent 70%)`,
-                        borderRadius: '50%',
+                        background: `radial-gradient(circle, ${color}50 0%, transparent 60%)`,
                     }}
                 />
             )}

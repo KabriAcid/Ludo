@@ -4,14 +4,14 @@ import { useGameStore } from '../../store/gameStore';
 import { PlayerColor } from '../../types';
 import { PLAYER_COLORS } from '../../utils/boardConfig';
 
-// Import dice images
+// Import dice images from public/icons
 const diceImages = [
-    '/dice-1.svg',
-    '/dice-2.svg',
-    '/dice-3.svg',
-    '/dice-4.svg',
-    '/dice-5.svg',
-    '/dice-6.svg',
+    '/icons/dice-1.svg',
+    '/icons/dice-2.svg',
+    '/icons/dice-3.svg',
+    '/icons/dice-4.svg',
+    '/icons/dice-5.svg',
+    '/icons/dice-6.svg',
 ];
 
 interface PlayerDiceProps {
