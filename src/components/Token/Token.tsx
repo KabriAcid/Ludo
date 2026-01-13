@@ -42,18 +42,18 @@ export const Token: React.FC<TokenProps> = ({
         <motion.div
             onClick={handleClick}
             className={`absolute flex items-center justify-center
-                ${isMovable ? 'cursor-pointer z-20' : 'z-10'}
+                ${isMovable ? 'cursor-pointer' : ''}
                 ${token.isHome ? 'opacity-60' : ''}`}
             style={{
                 width: tokenSize,
                 height: tokenSize,
                 left: x * cellSize + (cellSize - tokenSize) / 2 + stackOffset,
                 top: y * cellSize + (cellSize - tokenSize) / 2 + stackOffset,
+                zIndex: isMovable ? 30 : 20,
             }}
-            initial={{ scale: 0, y: -20 }}
+            initial={{ scale: 0 }}
             animate={{
                 scale: 1,
-                y: 0,
                 ...(isMovable && {
                     y: [0, -3, 0],
                 }),
@@ -64,7 +64,6 @@ export const Token: React.FC<TokenProps> = ({
             }}
             whileHover={isMovable ? { scale: 1.2, y: -5 } : {}}
             whileTap={isMovable ? { scale: 0.9 } : {}}
-            layout
         >
             {/* MapPin Icon Token */}
             <MapPin

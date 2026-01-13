@@ -50,7 +50,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                         >
                             {/* Icon */}
                             <div className="flex justify-center mb-4">
-                                <div className="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center">
+                                <div className="w-16 h-16 rounded-full flex items-center justify-center">
                                     <span className="text-4xl">⚠️</span>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             <div className="flex gap-3">
                                 <motion.button
                                     onClick={onCancel}
-                                    className="flex-1 py-3 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-colors"
+                                    className="text-sm flex-1 py-3 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-colors"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -77,7 +77,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                                 </motion.button>
                                 <motion.button
                                     onClick={onConfirm}
-                                    className="flex-1 py-3 px-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-medium transition-colors"
+                                    className="text-sm flex-1 py-3 px-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-medium transition-colors"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >

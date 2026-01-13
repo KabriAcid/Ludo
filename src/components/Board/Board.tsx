@@ -30,13 +30,14 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
         return (
             <motion.div
                 key={`base-${color}`}
-                className="absolute rounded-lg overflow-hidden"
+                className="absolute rounded-lg"
                 style={{
                     left: startX * cellSize,
                     top: startY * cellSize,
                     width: cellSize * 6,
                     height: cellSize * 6,
                     backgroundColor: bgColor,
+                    zIndex: 1,
                 }}
                 animate={isActive ? {
                     boxShadow: [
@@ -231,7 +232,7 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
 
     return (
         <motion.div
-            className="relative bg-board-bg rounded-xl shadow-2xl overflow-hidden"
+            className="relative bg-board-bg rounded-xl shadow-2xl"
             style={{
                 width: size,
                 height: size,
