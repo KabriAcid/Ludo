@@ -58,7 +58,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             {/* Title */}
                             <h2 className="text-xl font-bold text-white text-center mb-2">
                                 {title}
-                            </h2>
+                            </h2>                            
 
                             {/* Message */}
                             <p className="text-gray-300 text-center mb-6 text-sm">

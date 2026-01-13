@@ -133,42 +133,6 @@ export const GameScreen: React.FC<GameScreenProps> = ({ onGoToMenu }) => {
                 </div>
             </div>
 
-            {/* Player Status Bar */}
-            <div className="w-full max-w-lg flex justify-around mb-2 sm:mb-3">
-                {players.map((player) => (
-                    <motion.div
-                        key={player.id}
-                        className={`flex flex-col items-center px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl transition-all ${currentPlayer === player.id
-                            ? 'ring-2 ring-white/80 scale-105 sm:scale-110 shadow-lg'
-                            : 'opacity-50'
-                            }`}
-                        style={{ backgroundColor: PLAYER_COLORS[player.id] }}
-                        animate={currentPlayer === player.id ? {
-                            boxShadow: ['0 0 8px rgba(255,255,255,0.4)', '0 0 16px rgba(255,255,255,0.7)', '0 0 8px rgba(255,255,255,0.4)']
-                        } : {}}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                        <span className="text-white font-bold text-xs sm:text-sm drop-shadow">{PLAYER_NAMES[player.id]}</span>
-                        <div className="flex gap-0.5 sm:gap-1 mt-0.5 sm:mt-1">
-                            {player.tokens.map((token) => (
-                                <div
-                                    key={token.id}
-                                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${token.isHome
-                                        ? 'bg-green-400 shadow-green-400/50 shadow-sm'
-                                        : token.isOut
-                                            ? 'bg-white'
-                                            : 'bg-white/30'
-                                        }`}
-                                />
-                            ))}
-                        </div>
-                        {player.hasWon && (
-                            <span className="text-xs mt-0.5 sm:mt-1">🏆 #{player.rank}</span>
-                        )}
-                    </motion.div>
-                ))}
-            </div>
-
             {/* Game Board with external dice */}
             <div className="flex-1 flex items-center justify-center">
                 <div className="relative">
