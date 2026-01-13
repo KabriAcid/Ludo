@@ -21,10 +21,10 @@ interface PlayerDiceProps {
 }
 
 export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize }) => {
-    const { currentPlayer, diceValue, isRolling, hasRolled, rollDice, canRollAgain } = useGameStore();
+    const { currentPlayer, diceValue, hasRolled, rollDice, canRollAgain } = useGameStore();
 
     const isCurrentPlayer = currentPlayer === playerId;
-    const canRoll = isCurrentPlayer && !isRolling && (!hasRolled || canRollAgain);
+    const canRoll = isCurrentPlayer && (!hasRolled || canRollAgain);
     const diceSize = Math.max(cellSize * 1.3, 36);
 
     // Show dice value for current player, or default dice for others
@@ -38,7 +38,7 @@ export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize }) =>
             style={{
                 zIndex: isCurrentPlayer ? 50 : 10,
             }}
-            animate={isCurrentPlayer ? { scale: [1, 1.08, 1] } : {}}
+            animate={isCurrentPlayer && canRoll ? { scale: [1, 1.08, 1] } : {}}
             transition={{ duration: 1.5, repeat: Infinity }}
         >
             <motion.button
@@ -52,11 +52,6 @@ export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize }) =>
                     width: diceSize,
                     height: diceSize,
                 }}
-                animate={isRolling && isCurrentPlayer ? {
-                    rotate: [0, 15, -15, 10, -10, 5, -5, 0],
-                    scale: [1, 1.1, 1, 1.1, 1]
-                } : {}}
-                transition={{ duration: 0.5, repeat: isRolling && isCurrentPlayer ? Infinity : 0 }}
                 whileHover={canRoll ? { scale: 1.1 } : {}}
                 whileTap={canRoll ? { scale: 0.9 } : {}}
             >

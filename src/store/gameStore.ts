@@ -76,59 +76,48 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
         audioManager.play('diceRoll');
 
-        set({ isRolling: true, diceValue: null });
+        // Roll immediately and show result
+        const finalValue = rollDice();
 
-        // Animate dice roll
-        let rollCount = 0;
-        const maxRolls = 10;
-        const rollInterval = setInterval(() => {
-            set({ diceValue: rollDice() });
-            rollCount++;
-
-            if (rollCount >= maxRolls) {
-                clearInterval(rollInterval);
-                const finalValue = rollDice();
-
-                set((state) => {
-                    const newStats = { ...state.stats };
-                    newStats.totalRolls[state.currentPlayer]++;
-                    if (finalValue === 6) {
-                        newStats.sixes[state.currentPlayer]++;
-                    }
-
-                    return {
-                        diceValue: finalValue,
-                        isRolling: false,
-                        hasRolled: true,
-                        canRollAgain: false,
-                        stats: newStats,
-                    };
-                });
-
-                // Check if player can move
-                const updatedState = get();
-                const currentPlayer = updatedState.players.find(
-                    (p) => p.id === updatedState.currentPlayer
-                );
-
-                if (currentPlayer) {
-                    const movableTokens = getMovableTokens(currentPlayer, finalValue);
-
-                    if (movableTokens.length === 0) {
-                        // No moves available, skip turn after delay
-                        setTimeout(() => {
-                            get().skipTurn();
-                        }, 1000);
-                    } else if (movableTokens.length === 1) {
-                        // Auto-move if only one token can move
-                        setTimeout(() => {
-                            get().moveToken(movableTokens[0].id);
-                        }, 500);
-                    }
-                }
+        set((state) => {
+            const newStats = { ...state.stats };
+            newStats.totalRolls[state.currentPlayer]++;
+            if (finalValue === 6) {
+                newStats.sixes[state.currentPlayer]++;
             }
-        }, 100);
+
+            return {
+                diceValue: finalValue,
+                isRolling: false,
+                hasRolled: true,
+                canRollAgain: false,
+                stats: newStats,
+            };
+        });
+
+        // Check if player can move
+        const updatedState = get();
+        const currentPlayer = updatedState.players.find(
+            (p) => p.id === updatedState.currentPlayer
+        );
+
+        if (currentPlayer) {
+            const movableTokens = getMovableTokens(currentPlayer, finalValue);
+
+            if (movableTokens.length === 0) {
+                // No moves available, skip turn after delay
+                setTimeout(() => {
+                    get().skipTurn();
+                }, 1000);
+            } else if (movableTokens.length === 1) {
+                // Auto-move if only one token can move
+                setTimeout(() => {
+                    get().moveToken(movableTokens[0].id);
+                }, 500);
+            }
+        }
     },
+},
 
     // Move a token
     moveToken: (tokenId: string) => {
