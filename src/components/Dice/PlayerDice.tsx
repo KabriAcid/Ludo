@@ -17,15 +17,15 @@ const diceImages = [
 interface PlayerDiceProps {
     playerId: PlayerColor;
     cellSize: number;
-    position: { x: number; y: number };
+    position?: { x: number; y: number };
 }
 
-export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize, position }) => {
+export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize }) => {
     const { currentPlayer, diceValue, isRolling, hasRolled, rollDice, canRollAgain } = useGameStore();
 
     const isCurrentPlayer = currentPlayer === playerId;
     const canRoll = isCurrentPlayer && !isRolling && (!hasRolled || canRollAgain);
-    const diceSize = Math.max(cellSize * 1.4, 32);
+    const diceSize = Math.max(cellSize * 1.3, 36);
 
     // Show dice value for current player, or default dice for others
     const currentDiceImage = isCurrentPlayer && diceValue
@@ -34,22 +34,19 @@ export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize, posi
 
     return (
         <motion.div
-            className="absolute flex flex-col items-center"
+            className="flex flex-col items-center"
             style={{
-                left: position.x,
-                top: position.y,
-                transform: 'translate(-50%, -50%)',
                 zIndex: isCurrentPlayer ? 50 : 10,
             }}
-            animate={isCurrentPlayer ? { scale: [1, 1.05, 1] } : {}}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={isCurrentPlayer ? { scale: [1, 1.08, 1] } : {}}
+            transition={{ duration: 1.5, repeat: Infinity }}
         >
             <motion.button
                 onClick={canRoll ? rollDice : undefined}
                 disabled={!canRoll}
                 className={`relative rounded-lg shadow-lg ${canRoll
-                        ? 'cursor-pointer'
-                        : 'cursor-not-allowed'
+                    ? 'cursor-pointer'
+                    : 'cursor-not-allowed'
                     } ${!isCurrentPlayer ? 'opacity-40 grayscale' : ''}`}
                 style={{
                     width: diceSize,
@@ -96,28 +93,6 @@ export const PlayerDice: React.FC<PlayerDiceProps> = ({ playerId, cellSize, posi
                     }}
                 />
             </motion.button>
-
-            {/* Roll again indicator */}
-            {isCurrentPlayer && canRollAgain && (
-                <motion.div
-                    className="absolute -bottom-5 text-[10px] font-bold text-yellow-400 whitespace-nowrap"
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                >
-                    Roll again!
-                </motion.div>
-            )}
-
-            {/* Tap to roll indicator */}
-            {canRoll && !canRollAgain && (
-                <motion.div
-                    className="absolute -bottom-5 text-[10px] font-medium text-white/80 whitespace-nowrap"
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                    Tap to roll
-                </motion.div>
-            )}
         </motion.div>
     );
 };

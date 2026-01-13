@@ -119,6 +119,11 @@ export const useGameStore = create<GameStore>((set, get) => ({
                         setTimeout(() => {
                             get().skipTurn();
                         }, 1000);
+                    } else if (movableTokens.length === 1) {
+                        // Auto-move if only one token can move
+                        setTimeout(() => {
+                            get().moveToken(movableTokens[0].id);
+                        }, 500);
                     }
                 }
             }

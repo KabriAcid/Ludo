@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { Token } from '../Token/Token';
-import { PlayerDice } from '../Dice/PlayerDice';
 import { PlayerColor } from '../../types';
 import {
     BOARD_SIZE,
@@ -24,22 +23,44 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
     const movableTokens = getMovableTokens();
     const movableTokenIds = new Set(movableTokens.map((t) => t.id));
 
-    // Render player home base
+    // Render player home base with shimmer animation
     const renderHomeBase = (color: PlayerColor, startX: number, startY: number) => {
         const bgColor = PLAYER_COLORS[color];
+        const isActive = currentPlayer === color;
         return (
-            <div
+            <motion.div
                 key={`base-${color}`}
-                className="absolute rounded-lg"
+                className="absolute rounded-lg overflow-hidden"
                 style={{
                     left: startX * cellSize,
                     top: startY * cellSize,
                     width: cellSize * 6,
                     height: cellSize * 6,
                     backgroundColor: bgColor,
-                    border: '4px solid rgba(0,0,0,0.2)',
                 }}
+                animate={isActive ? {
+                    boxShadow: [
+                        `0 0 15px ${bgColor}`,
+                        `0 0 30px ${bgColor}`,
+                        `0 0 15px ${bgColor}`
+                    ]
+                } : {}}
+                transition={{ duration: 1.5, repeat: Infinity }}
             >
+                {/* Shimmer overlay for active player */}
+                {isActive && (
+                    <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                            background: 'linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.3) 50%, transparent 75%)',
+                            backgroundSize: '200% 100%',
+                        }}
+                        animate={{
+                            backgroundPosition: ['200% 0', '-200% 0'],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                    />
+                )}
                 {/* Inner white area for tokens */}
                 <div
                     className="absolute bg-white rounded-md"
@@ -70,7 +91,7 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
                         );
                     })}
                 </div>
-            </div>
+            </motion.div>
         );
     };
 
@@ -118,9 +139,9 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
 
             // Color the start positions - matches START_POSITIONS in boardConfig
             if (index === 0) cellColor = PLAYER_COLORS.red;
-            else if (index === 13) cellColor = PLAYER_COLORS.blue;
+            else if (index === 13) cellColor = PLAYER_COLORS.green;
             else if (index === 26) cellColor = PLAYER_COLORS.yellow;
-            else if (index === 39) cellColor = PLAYER_COLORS.green;
+            else if (index === 39) cellColor = PLAYER_COLORS.blue;
 
             cells.push(
                 <div
@@ -214,7 +235,6 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
             style={{
                 width: size,
                 height: size,
-                border: '6px solid #8b4513',
             }}
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -246,43 +266,6 @@ export const Board: React.FC<BoardProps> = ({ size }) => {
 
             {/* Tokens */}
             {renderTokens()}
-
-            {/* Individual Player Dice - positioned at bottom of each house */}
-            {/* Red - top-left house, dice at bottom-center */}
-            <PlayerDice
-                playerId="red"
-                cellSize={cellSize}
-                position={{ x: cellSize * 3, y: cellSize * 6.2 }}
-            />
-            {/* Blue - top-right house, dice at bottom-center */}
-            <PlayerDice
-                playerId="blue"
-                cellSize={cellSize}
-                position={{ x: cellSize * 12, y: cellSize * 6.2 }}
-            />
-            {/* Yellow - bottom-right house, dice at top-center */}
-            <PlayerDice
-                playerId="yellow"
-                cellSize={cellSize}
-                position={{ x: cellSize * 12, y: cellSize * 8.8 }}
-            />
-            {/* Green - bottom-left house, dice at top-center */}
-            <PlayerDice
-                playerId="green"
-                cellSize={cellSize}
-                position={{ x: cellSize * 3, y: cellSize * 8.8 }}
-            />
-
-            {/* Current player indicator */}
-            <motion.div
-                className="absolute top-2 left-2 px-3 py-1 rounded-full text-white text-xs font-bold"
-                style={{ backgroundColor: PLAYER_COLORS[currentPlayer] }}
-                key={currentPlayer}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-            >
-                {currentPlayer.toUpperCase()}'s Turn
-            </motion.div>
         </motion.div>
     );
 };

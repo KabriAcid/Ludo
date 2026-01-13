@@ -7,17 +7,17 @@ export const BOARD_SIZE = 15;
 // Standard: Red (top-left), Blue (top-right), Yellow (bottom-right), Green (bottom-left)
 export const START_POSITIONS: Record<PlayerColor, number> = {
     red: 0,
-    blue: 13,
+    blue: 39,
     yellow: 26,
-    green: 39,
+    green: 13,
 };
 
 // Home entry positions (where tokens turn into home stretch)
 export const HOME_ENTRY_POSITIONS: Record<PlayerColor, number> = {
     red: 50,
-    blue: 11,
+    blue: 37,
     yellow: 24,
-    green: 37,
+    green: 11,
 };
 
 // Safe positions on the main track (cannot be killed)
